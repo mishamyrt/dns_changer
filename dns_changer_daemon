@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+"""A script that automatically switches DNS when connecting to a VPN"""
+
+from os import popen
+from asyncio import run, sleep
+
+VPN_CONNECTION="VPN"
+VPN_DNS="10.129.144.6"
+FALLBACK_DNS="1.1.1.1"
+NETWORK_INTERFACE="Wi-Fi"
+
+def shell(command: str) -> str:
+    """Executes shell command and returns output"""
+    output_stream = popen(command)
+    return output_stream.read()
+
+def is_vpn_connected(conn_name: str) -> bool:
+    """Checks if given VPN is connected"""
+    lines = shell(f'scutil --nc status "{conn_name}"').split('\n')
+    return lines[0] == 'Connected'
+
+def set_dns(adapter_name: str, vpn: bool) -> None:
+    """Sets adapter DNS settings"""
+    dns = VPN_DNS if vpn else FALLBACK_DNS
+    shell(f"networksetup -setdnsservers {adapter_name} {dns}")
+
+async def main():
+    """Daemon entrypoint"""
+    last_state = False
+    while True:
+        state = is_vpn_connected(VPN_CONNECTION)
+        if state != last_state:
+            last_state = state
+            set_dns(NETWORK_INTERFACE, state)
+        await sleep(0.5)
+
+run(main())
