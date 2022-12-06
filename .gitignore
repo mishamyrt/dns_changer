@@ -1,6 +1,9 @@
 config.json
 /build/
+/build_bin/
 /dist/
+/bin/
 *.egg-info
 __pycache__
 /venv/
+*.spec

@@ -13,6 +13,11 @@ clean:
 	rm -rf dist
 
 build: dist/
+	$(VENV) pyinstaller \
+		--distpath bin \
+		--upx-dir=..\upx391w -y \
+		--workpath build_bin \
+		scripts/vpn-dns --onefile
 
 copy-config: $(CONFIG_PATH)
 

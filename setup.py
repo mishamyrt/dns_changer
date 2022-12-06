@@ -20,5 +20,5 @@ setuptools.setup(
     ],
     python_requires='>=3.7',
     package_dir={'':'.'},
-    scripts=['scripts/vpn_dns']
+    scripts=['scripts/vpn-dns']
 )
