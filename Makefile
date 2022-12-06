@@ -1,11 +1,13 @@
 VENV_PATH = ./venv
 VENV = . $(VENV_PATH)/bin/activate;
-CONFIG_DIR = $(HOME)/.config/vpn_dns_changer
+CONFIG_DIR = $(HOME)/.config/vpn_dns
 CONFIG_PATH = $(CONFIG_DIR)/config.json
 
 SRC := \
-	$(wildcard vpn_dns_changer_lib/*.py) \
+	$(wildcard vpn_dns/*.py) \
 	$(wildcard scripts/*)
+
+copy-config: $(CONFIG_PATH)
 
 clean:
 	rm -rf *.egg-info
@@ -18,8 +20,6 @@ build: dist/
 		--upx-dir=..\upx391w -y \
 		--workpath build_bin \
 		scripts/vpn-dns --onefile
-
-copy-config: $(CONFIG_PATH)
 
 configure:
 	python3 -m venv $(VENV_PATH)

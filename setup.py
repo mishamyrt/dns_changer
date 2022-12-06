@@ -5,14 +5,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="vpn_dns_changes",
+    name="vpn_dns_changer",
     version="0.1.0",
     author="Mikhael Khrustik",
     description="Service to solve the problem with DNS VPN on macOS",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=[
-        'vpn_dns_changer_lib'
+        'vpn_dns'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
