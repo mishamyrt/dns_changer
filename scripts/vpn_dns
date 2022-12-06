@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+"""A script that automatically switches DNS when connecting to a VPN"""
+from sys import argv
+from typing import List
+from vpn_dns_changer_lib import Daemon, DNSChanger
+
+def main(args: List[str]):
+    changer = DNSChanger()
+    process = Daemon(changer, "vpn_dns")
+    running = process.is_running()
+    if len(args) == 0:
+        if running:
+            print("Service is running")
+        else:
+            print("Service is not running")
+        return
+    cmd = args[0]
+    if cmd == 'start':
+        if running:
+            print("Service is already running")
+        else:
+            print("Service is started")
+            process.start_daemon()
+    elif cmd == 'run':
+        if running:
+            print("Service is running in background")
+            print("Stop it before you start a new one")
+        else:
+            try:
+                process.start()
+            except KeyboardInterrupt:
+                print("Service is stopped")
+    elif cmd == 'stop':
+        process.kill()
+    else:
+        print("Unknown command. Avaliable: start, stop, run")
+
+if __name__ == '__main__':
+    main(argv[1:])
