@@ -2,6 +2,10 @@
 
 The service that changes DNS servers when connecting to a VPN. Solves connection problems on macOS.
 
+#### Deprecated
+
+This repository has been abandoned. A new version written in Go is being developed in the [vpn-dns](https://github.com/mishamyrt/vpn-dns) repository.
+
 ## Setup
 
 ### 1. Create configuration
